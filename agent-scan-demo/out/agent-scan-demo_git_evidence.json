@@ -1,0 +1,218 @@
+{
+  "available": true,
+  "total_commits": 242,
+  "agent_commits": 76,
+  "pct": 31.4,
+  "by_agent": {
+    "Claude Code": 76
+  },
+  "recent": [
+    {
+      "hash": "c304540",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Agent Scan: fix endpoint false-positives in comments/docstrings + document governance"
+    },
+    {
+      "hash": "5617d75",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Agent Scan: cost + data-sovereignty signals (roadmap #4)"
+    },
+    {
+      "hash": "4e52c05",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Docs: document Project Metrics mode and refresh the mode table"
+    },
+    {
+      "hash": "0b93831",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "GUI: add Project Metrics mode (single project, no compare, no AI)"
+    },
+    {
+      "hash": "fae851d",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "CI: bundle the Agent Scan demo into customer installs"
+    },
+    {
+      "hash": "bccd87c",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "GUI: live progress for Agent Scan (was a silent hang)"
+    },
+    {
+      "hash": "7166b1e",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "GUI: produce project metrics for all scan modes (incl. AI Agent Scan)"
+    },
+    {
+      "hash": "908aa99",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Diff viewer: light/dark theme toggle (defaults light)"
+    },
+    {
+      "hash": "b911eec",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "GUI: hide Metric Set card in AI Code Scan / AI Agent Scan modes"
+    },
+    {
+      "hash": "563e840",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "GUI: bundled Agent Scan demo button + guide pointer"
+    },
+    {
+      "hash": "57a4ae1",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "GUI: label the saved-sets list, theme its text"
+    },
+    {
+      "hash": "6775f3d",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "GUI: group metric-set checkboxes by dimension"
+    },
+    {
+      "hash": "7db8206",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "GUI: make metric-set controls (and stragglers) theme-aware in light mode"
+    },
+    {
+      "hash": "a226d32",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "REP_CHURN now a first-class metric-set column"
+    },
+    {
+      "hash": "18859f6",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Agent Scan: user-extensible providers + HTTP endpoint detection"
+    },
+    {
+      "hash": "90f88af",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Agent Scan boost #1+#4: non-Western providers + AI-SDK use now reaches ELEVATED"
+    },
+    {
+      "hash": "1be0758",
+      "date": "2026-06-14",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Add Agent Scan demo project (examples/agent-scan-demo)"
+    },
+    {
+      "hash": "c36fc8d",
+      "date": "2026-06-13",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Plain-English 'what is this' for Agent Scan (report + both guides)"
+    },
+    {
+      "hash": "80dfba1",
+      "date": "2026-06-13",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Reports: cap FILE column (ellipsis + hover path) so FUNCTIONS isn't pushed off-screen"
+    },
+    {
+      "hash": "a5720d3",
+      "date": "2026-06-13",
+      "author": "lance.black",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Name the single scan 'AI Code Scan' throughout; drop useless 5-file summary list"
+    }
+  ],
+  "files": {
+    "codedelta_server.py": 26,
+    "USER-GUIDE.html": 18,
+    "ai_report.py": 13,
+    "site/user-guide.html": 12,
+    ".github/workflows/build.yml": 12,
+    "ais_report.py": 6,
+    "src/report_html.cpp": 5,
+    "ai_scorer.py": 5,
+    "site/index.html": 5,
+    "CLAUDE.md": 5,
+    "ai_agent_scanner.py": 4,
+    "examples/agent-scan-demo/out/agent-scan-demo_agent_scan.json": 4,
+    "examples/agent-scan-demo/out/agent-scan-demo_git_evidence.json": 4,
+    "examples/agent-scan-demo/README.md": 4,
+    "tests/run_tests.py": 4,
+    "src/license.h": 3,
+    "src/codedelta.cpp": 3,
+    "src/diff_viewer.h": 2,
+    "examples/agent-scan-demo/raw_http.py": 2,
+    "site/cli-schematic.html": 2,
+    "site/faq.html": 2,
+    "site/methodology.html": 2,
+    "site/paper-ai.html": 2,
+    "site/paper-churn.html": 2,
+    "TODO.md": 2
+  }
+}
