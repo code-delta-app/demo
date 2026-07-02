@@ -1,0 +1,20 @@
+{
+  "_comment": "Optional user-extensible provider list for Agent Scan. Copy this to 'codedelta_agents.json' in your CodeDelta application-support folder (or next to the engine, or your project root) to teach Agent Scan about additional AI providers, your own internal AI wrappers, or private API gateways. It is ADDITIVE — the built-in providers are always detected too.",
+  "providers": [
+    {
+      "name": "Acme Internal LLM",
+      "lang": "python",
+      "imports": ["acme_llm", "acme.ai.client"],
+      "weight": 40
+    },
+    {
+      "name": "Acme JS SDK",
+      "lang": "js",
+      "imports": ["@acme/ai-sdk"]
+    },
+    {
+      "name": "Internal AI Gateway",
+      "endpoints": ["ai-gateway.acme.internal", "llm.acme.com"]
+    }
+  ]
+}

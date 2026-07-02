@@ -1,0 +1,250 @@
+{
+  "summary": {
+    "total_files": 11,
+    "flagged_files": 10,
+    "critical_files": 0,
+    "high_files": 3,
+    "elevated_files": 7,
+    "normal_files": 1,
+    "mode": "snapshot",
+    "summary_text": "Scanned 11 file(s). 0 CRITICAL, 3 HIGH, 7 ELEVATED. 1 file(s) contain the rogue agent pattern (eval/exec near AI API call). AI SDKs detected: openai, anthropic, OpenAI, Anthropic. "
+  },
+  "sdk_inventory": {
+    "openai": 4,
+    "anthropic": 2,
+    "OpenAI": 2,
+    "Anthropic": 2,
+    "langchain": 1,
+    "crewai": 1,
+    "http:api.deepseek.com": 3,
+    "http:dashscope.aliyuncs.com": 1,
+    "http:api.openai.com": 2,
+    "http:api.anthropic.com": 1,
+    "dashscope": 1,
+    "zhipuai": 1
+  },
+  "files": [
+    {
+      "rel_path": "rogue_executor.py",
+      "language": "Python",
+      "ais": 100,
+      "risk": "HIGH",
+      "combined_risk": "HIGH",
+      "gss": 0,
+      "injection_vectors": 2,
+      "sdk_found": [
+        "import openai",
+        "import anthropic"
+      ],
+      "agent_patterns": [],
+      "dangerous_exec": [
+        "eval/exec near AI API call (line 14) \u2014 possible execution of AI-generated code",
+        "eval/exec near AI API call (line 22) \u2014 possible execution of AI-generated code"
+      ],
+      "signals": [
+        "ai_sdk_import(2_sdk(s)_detected)",
+        "ROGUE_AGENT_PATTERN:eval_exec_near_ai_call",
+        "prompt_injection_partial(2)"
+      ]
+    },
+    {
+      "rel_path": "cost_and_sovereignty.py",
+      "language": "Python",
+      "ais": 98,
+      "risk": "HIGH",
+      "combined_risk": "HIGH",
+      "gss": 0,
+      "injection_vectors": 1,
+      "sdk_found": [
+        "http:api.deepseek.com"
+      ],
+      "agent_patterns": [
+        "hand_rolled_loop"
+      ],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_http_endpoint(api.deepseek.com)",
+        "data_egress(model_hosted_in_CN:api.deepseek.com)",
+        "data_sovereignty_risk(non-allied_jurisdiction)",
+        "agent_loop(ai_call_inside_loop)",
+        "cost_risk(ai_calls_inside_loop)",
+        "prompt_injection_partial(1)"
+      ]
+    },
+    {
+      "rel_path": "multi_agent.py",
+      "language": "Python",
+      "ais": 80,
+      "risk": "HIGH",
+      "combined_risk": "HIGH",
+      "gss": 0,
+      "injection_vectors": 0,
+      "sdk_found": [
+        "from langchain",
+        "from crewai"
+      ],
+      "agent_patterns": [
+        "create_react_agent",
+        "AgentExecutor",
+        "crewai",
+        "Crew("
+      ],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_sdk_import(2_sdk(s)_detected)",
+        "agent_orchestration(create_react_agent,AgentExecutor)"
+      ]
+    },
+    {
+      "rel_path": "sovereign_router.go",
+      "language": "Go",
+      "ais": 58,
+      "risk": "ELEVATED",
+      "combined_risk": "ELEVATED",
+      "gss": 0,
+      "injection_vectors": 1,
+      "sdk_found": [
+        "http:api.deepseek.com",
+        "http:dashscope.aliyuncs.com"
+      ],
+      "agent_patterns": [],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_http_endpoint(api.deepseek.com)",
+        "data_egress(model_hosted_in_CN:api.deepseek.com)",
+        "data_sovereignty_risk(non-allied_jurisdiction)",
+        "prompt_injection_partial(1)"
+      ]
+    },
+    {
+      "rel_path": "raw_http.py",
+      "language": "Python",
+      "ais": 58,
+      "risk": "ELEVATED",
+      "combined_risk": "ELEVATED",
+      "gss": 0,
+      "injection_vectors": 2,
+      "sdk_found": [
+        "http:api.openai.com",
+        "http:api.anthropic.com"
+      ],
+      "agent_patterns": [],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_http_endpoint(api.openai.com)",
+        "prompt_injection_partial(2)"
+      ]
+    },
+    {
+      "rel_path": "chinese_models.py",
+      "language": "Python",
+      "ais": 58,
+      "risk": "ELEVATED",
+      "combined_risk": "ELEVATED",
+      "gss": 0,
+      "injection_vectors": 2,
+      "sdk_found": [
+        "import dashscope",
+        "import zhipuai",
+        "from openai",
+        "import OpenAI",
+        "http:api.deepseek.com"
+      ],
+      "agent_patterns": [],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_sdk_import(4_sdk(s)_detected)",
+        "ai_http_endpoint(api.deepseek.com)",
+        "data_egress(model_hosted_in_CN:api.deepseek.com)",
+        "data_sovereignty_risk(non-allied_jurisdiction)",
+        "prompt_injection_partial(2)"
+      ]
+    },
+    {
+      "rel_path": "chatbot.py",
+      "language": "Python",
+      "ais": 58,
+      "risk": "ELEVATED",
+      "combined_risk": "ELEVATED",
+      "gss": 0,
+      "injection_vectors": 2,
+      "sdk_found": [
+        "import openai",
+        "from anthropic",
+        "import Anthropic"
+      ],
+      "agent_patterns": [],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_sdk_import(3_sdk(s)_detected)",
+        "prompt_injection_partial(2)"
+      ]
+    },
+    {
+      "rel_path": "unsafe_prompt.py",
+      "language": "Python",
+      "ais": 58,
+      "risk": "ELEVATED",
+      "combined_risk": "ELEVATED",
+      "gss": 0,
+      "injection_vectors": 1,
+      "sdk_found": [
+        "import openai"
+      ],
+      "agent_patterns": [],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_sdk_import(1_sdk(s)_detected)",
+        "prompt_injection_partial(1)"
+      ]
+    },
+    {
+      "rel_path": "frontend.js",
+      "language": "JavaScript",
+      "ais": 40,
+      "risk": "ELEVATED",
+      "combined_risk": "ELEVATED",
+      "gss": 0,
+      "injection_vectors": 0,
+      "sdk_found": [
+        "import OpenAI from \"openai",
+        "import Anthropic from \"@anthropic-ai/sdk"
+      ],
+      "agent_patterns": [],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_sdk_import(2_sdk(s)_detected)"
+      ]
+    },
+    {
+      "rel_path": "model_gateway.go",
+      "language": "Go",
+      "ais": 40,
+      "risk": "ELEVATED",
+      "combined_risk": "ELEVATED",
+      "gss": 0,
+      "injection_vectors": 0,
+      "sdk_found": [
+        "http:api.openai.com"
+      ],
+      "agent_patterns": [],
+      "dangerous_exec": [],
+      "signals": [
+        "ai_http_endpoint(api.openai.com)"
+      ]
+    },
+    {
+      "rel_path": "plain_utils.py",
+      "language": "Python",
+      "ais": 0,
+      "risk": "NORMAL",
+      "combined_risk": "NORMAL",
+      "gss": 0,
+      "injection_vectors": 0,
+      "sdk_found": [],
+      "agent_patterns": [],
+      "dangerous_exec": [],
+      "signals": []
+    }
+  ]
+}

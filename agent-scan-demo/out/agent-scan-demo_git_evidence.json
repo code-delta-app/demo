@@ -1,0 +1,50 @@
+{
+  "available": true,
+  "total_commits": 9,
+  "agent_commits": 4,
+  "pct": 44.4,
+  "by_agent": {
+    "Claude Code": 4
+  },
+  "recent": [
+    {
+      "hash": "72a47bb",
+      "date": "2026-06-10",
+      "author": "demo-developer",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Executor cleanup"
+    },
+    {
+      "hash": "930fa1a",
+      "date": "2026-06-10",
+      "author": "demo-developer",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Add raw HTTP model call"
+    },
+    {
+      "hash": "17dbbfc",
+      "date": "2026-06-10",
+      "author": "demo-developer",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Add streaming responses"
+    },
+    {
+      "hash": "35b1224",
+      "date": "2026-06-10",
+      "author": "demo-developer",
+      "agents": [
+        "Claude Code"
+      ],
+      "subject": "Wire model fallback logic"
+    }
+  ],
+  "files": {
+    "churn.log": 4
+  }
+}
