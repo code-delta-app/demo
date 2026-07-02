@@ -1,0 +1,17 @@
+name: CodeDelta
+on: [pull_request]
+
+permissions:
+  contents: read
+  pull-requests: write     # post the summary comment
+  security-events: write   # upload SARIF to the code-scanning tab
+
+jobs:
+  codedelta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: code-delta-app/action@v1
+        with:
+          mode: both
