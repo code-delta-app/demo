@@ -1,41 +1,53 @@
 {
   "available": true,
-  "total_commits": 9,
-  "agent_commits": 4,
-  "pct": 44.4,
+  "total_commits": 10,
+  "agent_commits": 5,
+  "pct": 50.0,
   "by_agent": {
-    "Claude Code": 4
+    "Claude Code": 2,
+    "Aider": 1,
+    "Cursor": 1,
+    "GitHub Copilot": 1
   },
   "recent": [
     {
-      "hash": "72a47bb",
+      "hash": "da77d2b",
       "date": "2026-06-10",
       "author": "demo-developer",
       "agents": [
         "Claude Code"
       ],
-      "subject": "Executor cleanup"
+      "subject": "Add cost tracking hooks"
     },
     {
-      "hash": "930fa1a",
+      "hash": "6c287b8",
       "date": "2026-06-10",
       "author": "demo-developer",
       "agents": [
-        "Claude Code"
+        "Aider"
+      ],
+      "subject": "Executor cleanup (aider)"
+    },
+    {
+      "hash": "a4f56f5",
+      "date": "2026-06-10",
+      "author": "demo-developer",
+      "agents": [
+        "Cursor"
       ],
       "subject": "Add raw HTTP model call"
     },
     {
-      "hash": "17dbbfc",
+      "hash": "c20b06b",
       "date": "2026-06-10",
       "author": "demo-developer",
       "agents": [
-        "Claude Code"
+        "GitHub Copilot"
       ],
       "subject": "Add streaming responses"
     },
     {
-      "hash": "35b1224",
+      "hash": "7e16cd5",
       "date": "2026-06-10",
       "author": "demo-developer",
       "agents": [
@@ -45,6 +57,6 @@
     }
   ],
   "files": {
-    "churn.log": 4
+    "churn.log": 5
   }
 }
