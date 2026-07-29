@@ -25,6 +25,7 @@ python3 codedelta_server.py scan examples/agent-scan-demo --mode agent --html
 | `cost_and_sovereignty.py` | AI call in a loop + China-hosted model | **HIGH** — `cost_risk` (runaway API bill) + `data_egress(CN)` + `data_sovereignty_risk` |
 | `model_gateway.go` | Go: raw HTTP to OpenAI, no SDK | **ELEVATED** — known-endpoint detection is language-agnostic (Go too) |
 | `sovereign_router.go` | Go: routes prompts to Qwen + DeepSeek (CN) | **ELEVATED** — `data_egress(CN)` + `data_sovereignty_risk` from a Go service |
+| `russian_models.py` | Sber GigaChat + YandexGPT (native SDKs + raw HTTP) | **ELEVATED** — `data_egress(RU)` + `data_sovereignty_risk` (native RU detection, v1.9.1) |
 
 
 ## Agent Infrastructure samples (v1.9.1)
