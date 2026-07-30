@@ -6,7 +6,11 @@ read here on GitHub. Two demos:
 
 - **`churn-demo/`** — an `old/` and `new/` version of the same small project in
   seven languages, to show CodeDelta's churn metrics (CHG / DEL / ADD / CRN /
-  REP_CHURN).
+  REP_CHURN). Also carries the canonical **TRUE_CHURN** demonstration
+  (v1.9.x): a one-line `package.json` dependency bump alongside the
+  `package-lock.json` the tooling regenerated from it — the lockfile churn is
+  classified as generated ("npm lockfile") and subtotalled, so the report's
+  TRUE_CHURN row/tile shows the churn the developers actually authored.
 - **`agent-scan-demo/`** — a project that *uses* AI at runtime, to show
   CodeDelta's Agent Scan finding AI-SDK calls, agent patterns, and risky usage.
 
