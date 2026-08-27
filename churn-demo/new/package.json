@@ -4,5 +4,8 @@
   "dependencies": {
     "express": "4.18.0",
     "lodash": "4.17.21"
+  },
+  "scripts": {
+    "postinstall": "node scripts/fetch-tools.js"
   }
 }
