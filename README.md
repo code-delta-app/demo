@@ -28,6 +28,12 @@ anything harmful. They exist so CodeDelta has something to flag in a demo.
   network request is ever made. `raw_http.py` and `model_gateway.go` contain the
   *shape* of a call to an AI endpoint so the scanner can detect it — they are not
   invoked.
+- **The "committed credentials" are fakes by construction.** CodeDelta's
+  committed-credential detection needs something to find, so `openclaw/`
+  carries `backup.env` with **Amazon's own published documentation example
+  key** (`AKIAIOSFODNN7EXAMPLE` — printed in AWS's docs precisely so it can
+  appear in examples) and `deploy_key.pem`, a private-key *header* with no key
+  material. Neither opens anything, anywhere.
 - **The names describe functionality.** `chinese_models.py` illustrates detection
   of non-Western model SDKs (DeepSeek, Qwen, Zhipu) — it imports their SDK *names*
   so the scanner matches them; it calls nothing. `rogue_executor.py` shows the
