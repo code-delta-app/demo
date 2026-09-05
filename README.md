@@ -11,6 +11,11 @@ read here on GitHub. Two demos:
   `package-lock.json` the tooling regenerated from it — the lockfile churn is
   classified as generated ("npm lockfile") and subtotalled, so the report's
   TRUE_CHURN row/tile shows the churn the developers actually authored.
+  The `ledger.*` pairs (v2.0.2) show **moved code**: a 20-statement block
+  moved to the far end of the file, and one line holding four statements
+  moved with it — git counts ~25 lines deleted and ~25 added, CodeDelta
+  counts them as MOV and reports the single real edit as CHG 1. Expected
+  figures and the fixture rules are in `churn-demo/README.md`.
 - **`agent-scan-demo/`** — a project that *uses* AI at runtime, to show
   CodeDelta's Agent Scan finding AI-SDK calls, agent patterns, and risky usage.
 
