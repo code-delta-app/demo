@@ -34,26 +34,27 @@ Measured with the CodeDelta engine on these exact files. Git figures from
 |---|---|---|---|---|---|---|---|
 | ledger.cpp  | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 21 |
 | Ledger.java | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 21 |
-| ledger.js   | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 24 |
-| ledger.ts   | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 24 |
-| ledger.go   | +24 / −24 | 1 | 0 | 0 | 1 | 20 | 21 |
+| ledger.js   | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 21 |
+| ledger.ts   | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 21 |
+| ledger.go   | +24 / −24 | 1 | 0 | 0 | 1 | 20 | 20 |
 | ledger.py   | +23 / −23 | 1 | 0 | 0 | 1 | 21 | 21 |
 | ledger.sh   | +24 / −24 | 1 | 0 | 0 | 1 | 21 | 21 |
 
 MOV_SLOC is the number of distinct physical lines the moved statements occupy
-(rule of engine 2.0.2 and later). Engine 2.0.1 counted one line per moved
-statement, giving 24 for C++/Java and 27 for JS/TS on the dense line; every
-other figure in the table is identical on 2.0.1.
+(engine 2.0.2 and later). Engine 2.0.1 differs in two places: it counted one
+line per moved statement (24 for C++/Java, and on JS/TS the dense line made
+it 27), and its JS/TS/Go readers carried the method header line inside the
+first statement (JS/TS 24, Go 21 on 2.0.2-dev before 5 Sep 2026). Every other
+figure in the table is identical on 2.0.1.
 
 Why the per-language MOV counts differ:
 
 - **C++ / Java:** 20 block statements + 4 on the dense line = 24 statements on
   21 lines. Method headers and braces are not statements.
-- **JS / TS:** same 24 statements. The JS reader splits on semicolons, so a
-  method header rides with the method's first statement; that token spans the
-  header line and the previous method's closing brace, hence MOV_SLOC 24.
-- **Go:** no dense line (gofmt style). The `func` header rides with the first
-  statement, so 20 statements over 21 lines.
+- **JS / TS:** same 24 statements on 21 lines. Method headers and braces are
+  not statements (since 5 Sep 2026; earlier engines carried the header inside
+  the first statement).
+- **Go:** no dense line (gofmt style): 20 statements on 20 lines.
 - **Python / Shell:** every logical line is a statement, and the `def` /
   function header line is one of them: 21.
 
