@@ -165,7 +165,7 @@ class Ledger {
         this.summary.set("pending", pending);
         this.summary.set("disputed", disputed);
         this.summary.set("average", average);
-        this.balance = closing;
+        this.balance = closing + this.interestPaid;
     }
 
     resetCounters(): void { this.pendingHolds = 0; this.clearedItems = 0; this.flaggedItems = 0; this.disputedItems = 0; }

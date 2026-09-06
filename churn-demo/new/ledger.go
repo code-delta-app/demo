@@ -183,7 +183,7 @@ func (l *Ledger) Reconcile() {
 	l.summary["pending"] = float64(pending)
 	l.summary["disputed"] = float64(disputed)
 	l.summary["average"] = average
-	l.balance = closing
+	l.balance = closing + l.interestPaid
 }
 
 func (l *Ledger) log(m string) {}

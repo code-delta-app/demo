@@ -152,7 +152,7 @@ public:
         summary_["pending"] = pending;
         summary_["disputed"] = disputed;
         summary_["average"] = average;
-        balance_ = closing;
+        balance_ = closing + interestPaid_;
     }
 
     void resetCounters() { pendingHolds_ = 0; clearedItems_ = 0; flaggedItems_ = 0; disputedItems_ = 0; }

@@ -168,7 +168,7 @@ public class Ledger {
         summary.put("pending", (double) pendingCount);
         summary.put("disputed", (double) disputedCount);
         summary.put("average", average);
-        balance = closing;
+        balance = closing + interestPaid;
     }
 
     public void resetCounters() { pendingHolds = 0; clearedItems = 0; flaggedItems = 0; disputedItems = 0; }

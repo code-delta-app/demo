@@ -125,7 +125,7 @@ class Ledger:
         self.summary["pending"] = pending
         self.summary["disputed"] = disputed
         self.summary["average"] = average
-        self.balance = closing
+        self.balance = closing + self.interest_paid
 
     def log(self, m):
         pass

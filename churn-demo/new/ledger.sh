@@ -176,7 +176,7 @@ reconcile() {
     summary[pending]=$pending_n
     summary[disputed]=$disputed_n
     summary[average]=$average
-    balance=$closing
+    balance=$((closing + interest_paid))
 }
 
 log() {

@@ -23,40 +23,47 @@ the rest as **moved**:
   `resetCounters()` holds four statements on one line and moves with the
   block. MOV_LLOC counts the four statements; MOV_SLOC counts the one line.
 - **One genuine edit** in `post()` (`balance += amount` becomes
-  `balance = balance + amount`), so the file also carries real churn: CHG 1.
+  `balance = balance + amount`), so the file also carries real churn.
+- **One edit inside the moved block** (added 6 Sep 2026): the block's last
+  statement, `balance = closing`, becomes `balance = closing + interestPaid`.
+  Edits trump moves: that statement is counted as CHANGED (churn), not as a
+  move, and reported as **changed and moved** (CHM_LLOC). The Code Browser
+  paints its two rows red with the navy move edge and the jump chip.
 
 ### Figures (written before the run, then reproduced)
 
 Measured with the CodeDelta engine on these exact files. Git figures from
 `git diff --no-index --numstat old/<f> new/<f>`.
 
-| File | git numstat (+/−) | CHG_LLOC | DEL_LLOC | ADD_LLOC | CRN_LLOC | MOV_LLOC | MOV_SLOC |
-|---|---|---|---|---|---|---|---|
-| ledger.cpp  | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 21 |
-| Ledger.java | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 21 |
-| ledger.js   | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 21 |
-| ledger.ts   | +26 / −26 | 1 | 0 | 0 | 1 | 24 | 21 |
-| ledger.go   | +24 / −24 | 1 | 0 | 0 | 1 | 20 | 20 |
-| ledger.py   | +23 / −23 | 1 | 0 | 0 | 1 | 21 | 21 |
-| ledger.sh   | +24 / −24 | 1 | 0 | 0 | 1 | 21 | 21 |
+| File | git numstat (+/−) | CHG_LLOC | DEL_LLOC | ADD_LLOC | CRN_LLOC | MOV_LLOC | CHM_LLOC | MOV_SLOC |
+|---|---|---|---|---|---|---|---|---|
+| ledger.cpp  | +26 / −26 | 2 | 0 | 0 | 2 | 23 | 1 | 21 |
+| Ledger.java | +26 / −26 | 2 | 0 | 0 | 2 | 23 | 1 | 21 |
+| ledger.js   | +26 / −26 | 2 | 0 | 0 | 2 | 23 | 1 | 21 |
+| ledger.ts   | +26 / −26 | 2 | 0 | 0 | 2 | 23 | 1 | 21 |
+| ledger.go   | +24 / −24 | 2 | 0 | 0 | 2 | 19 | 1 | 20 |
+| ledger.py   | +23 / −23 | 2 | 0 | 0 | 2 | 20 | 1 | 20 |
+| ledger.sh   | +24 / −24 | 2 | 0 | 0 | 2 | 20 | 1 | 20 |
 
 MOV_SLOC is the number of distinct physical lines the moved statements occupy
-(engine 2.0.2 and later). Engine 2.0.1 differs in two places: it counted one
-line per moved statement (24 for C++/Java, and on JS/TS the dense line made
-it 27), and its JS/TS/Go readers carried the method header line inside the
-first statement (JS/TS 24, Go 21 on 2.0.2-dev before 5 Sep 2026). Every other
-figure in the table is identical on 2.0.1.
+(engine 2.0.2 and later), plus the block's header line, which moved with it.
+CHM_LLOC is the changed-and-moved statement; it is inside CHG_LLOC, not
+MOV_LLOC. Engine 2.0.1 has no CHM_LLOC column and differs on MOV_SLOC (it
+counted one line per moved statement, and its JS/TS/Go readers carried the
+method header inside the first statement). Measured 6 Sep 2026 with the
+2.0.2-dev engine at commit 7498d53.
 
 Why the per-language MOV counts differ:
 
-- **C++ / Java:** 20 block statements + 4 on the dense line = 24 statements on
-  21 lines. Method headers and braces are not statements.
-- **JS / TS:** same 24 statements on 21 lines. Method headers and braces are
-  not statements (since 5 Sep 2026; earlier engines carried the header inside
-  the first statement).
-- **Go:** no dense line (gofmt style): 20 statements on 20 lines.
+- **C++ / Java:** 20 block statements + 4 on the dense line = 24, of which 23
+  moved unchanged and 1 (the last) was edited — changed and moved. Moved
+  lines: 19 block lines + the dense line + the `reconcile` header line = 21.
+  Braces are not statements; a lone `}` is not credited as a moved line.
+- **JS / TS:** same 24 statements, 23 moved + 1 changed and moved, 21 lines.
+- **Go:** no dense line (gofmt style): 19 moved + 1 changed and moved; 20
+  moved lines including the `func` header.
 - **Python / Shell:** every logical line is a statement, and the `def` /
-  function header line is one of them: 21.
+  function header line is one of them: 20 moved + 1 changed and moved.
 
 ### How the fixture is shaped, and why
 
