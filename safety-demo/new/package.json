@@ -1,0 +1,18 @@
+{
+  "name": "buildproj-tools",
+  "version": "2.0.0",
+  "description": "Report tooling for buildproj",
+  "scripts": {
+    "test": "node test/run.js",
+    "lint": "eslint tools/",
+    "postinstall": "node scripts/fetch-toolchain.js"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "chalk": "^5.3.0",
+    "undici": "^6.15.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  }
+}

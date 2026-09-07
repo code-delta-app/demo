@@ -1,0 +1,14 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps { sh 'make' }
+    }
+    stage('Check') {
+      steps { sh './app buildproj.conf "2+2"' }
+    }
+  }
+  post {
+    failure { mail to: 'dev@example.com', subject: 'buildproj build failed' }
+  }
+}

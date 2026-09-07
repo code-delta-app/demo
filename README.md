@@ -54,3 +54,11 @@ documented. Per-file expectations are in each demo's own README.
 The CodeDelta tool fetches a **tagged release** of this repo matching its own
 version, so the demo a given build shows never changes underneath it. `main` may
 move ahead of released tools.
+
+## safety-demo (added 7 Sep 2026)
+
+A third sample for the app's **Churn + Agent Scan** demo: two versions of a small
+C + Python service whose build machinery changes (install hooks, deleted Jenkinsfile,
+new workflows, Debian packaging) beside the synthetic agent files. Shows the diff'd
+build-file alert and every other safety surface in one run. Figures in
+`safety-demo/README.md`.
