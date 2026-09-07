@@ -62,3 +62,6 @@ C + Python service whose build machinery changes (install hooks, deleted Jenkins
 new workflows, Debian packaging) beside the synthetic agent files. Shows the diff'd
 build-file alert and every other safety surface in one run. Figures in
 `safety-demo/README.md`.
+
+`agent-scan-demo` gained `java/`, `csharp/` and `cpp/` agent classes on 7 Sep 2026 so the
+Code Browser's Classes tab and class visualiser populate for the Agent Scan demo too.
