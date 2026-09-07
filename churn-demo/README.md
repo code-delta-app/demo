@@ -82,3 +82,19 @@ Why the per-language MOV counts differ:
   CHG only if the two texts share at least 30% of their characters as a
   common substring; otherwise DEL + ADD. `balance += amount` to
   `balance = balance + amount` shares 47%.
+
+## Comment churn, an added file and a deleted file (added 7 Sep 2026)
+
+So that every tile on the app's panel has a value to show:
+
+- `ledger.cpp` and `ledger.py` each carry three comment lines in the old version:
+  one is **edited** in the new version, one is **removed**, and one new comment is
+  **added** at the end of the file. Measured: CHG_COM 1 / DEL_COM 1 / ADD_COM 1 per
+  file, 2 / 2 / 2 in total. Comment churn never touches the LLOC or SLOC figures —
+  the ledger rows above are unchanged.
+- `audit.py` exists only in the new version (ADD_FILE 1, ADD_LLOC 8).
+- `legacy_export.sh` exists only in the old version (DEL_FILE 1, DEL_LLOC 5).
+
+Totals for the pair on CodeDelta 2.0.1 (7 Sep 2026): 18 files, 16 changed, 1 added,
+1 deleted; CHG_LLOC 464, DEL_LLOC 207, ADD_LLOC 287, MOV_LLOC 162, CHM_LLOC 7,
+CRN_LLOC 958; CHG_COM 2, DEL_COM 2, ADD_COM 2.

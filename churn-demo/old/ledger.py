@@ -1,3 +1,6 @@
+# Ledger: append-only journal of entries
+# TODO: rounding of interest is still truncation
+# Entries are never mutated once written
 class Ledger:
     def __init__(self, name):
         self.name = name

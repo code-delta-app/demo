@@ -1,3 +1,5 @@
+# Ledger: append-only journal of entries, audited monthly
+# Entries are never mutated once written
 class Ledger:
     def __init__(self, name):
         self.name = name
@@ -129,3 +131,5 @@ class Ledger:
 
     def log(self, m):
         pass
+
+# Reviewed 2026-09: interest rounding now uses banker's rounding

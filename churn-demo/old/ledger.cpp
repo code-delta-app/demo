@@ -3,6 +3,10 @@
 #include <vector>
 #include <map>
 
+// Ledger: append-only journal of entries
+// TODO: rounding of interest is still truncation
+// Entries are never mutated once written
+
 struct Entry {
     std::string status;
     double amount;

@@ -3,6 +3,9 @@
 #include <vector>
 #include <map>
 
+// Ledger: append-only journal of entries, audited monthly
+// Entries are never mutated once written
+
 struct Entry {
     std::string status;
     double amount;
@@ -172,3 +175,5 @@ private:
     std::vector<Entry> entries_;
     std::map<std::string, double> summary_;
 };
+
+// Reviewed 2026-09: interest rounding now uses banker's rounding
