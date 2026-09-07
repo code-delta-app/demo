@@ -26,7 +26,7 @@ Run it the way the GitHub Action runs a pull request — Churn + Agent Scan:
 - **Build & Deployment Surface (12)**: the inventory of the new version's build files
 - **Committed Credentials (1)** and **Agent Infrastructure (6, 2 tier-3)** from `agent/openclaw/`, `agent/.claude/`, `agent/.mcp.json`
 - **Governance & Compliance**: data egress to CN and RU providers
-- **AI SDK Inventory**, **Flagged Files** (35 scanned: 6 HIGH, 11 ELEVATED — the agent files include the Java, C# and C++ agent classes, three of them rogue-agent HIGH), **Agent Map**
+- **AI SDK Inventory**, **Flagged Files** (35 scanned: 4 CRITICAL, 2 HIGH, 11 ELEVATED — the agent files include the Java, C# and C++ agent classes; the four rogue-agent files are CRITICAL), **Agent Map**
 - The Code Browser opens with an **Agents** view of the same map
 
 Churn (new vs old): 68 files, 19 changed, 11 added, 4 deleted;
