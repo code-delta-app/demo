@@ -18,6 +18,7 @@ Run it the way the GitHub Action runs a pull request — Churn + Agent Scan:
 | Packaging / containers | `Dockerfile` modified; `buildproj.spec` deleted; `debian/control`, `debian/rules`, `docker-compose.yml` added |
 | Dependency manifests | `Cargo.lock` deleted; `go.sum` added; `requirements.txt` modified |
 | Source | `src/net.c`, `src/net.h` added; edits in `src/*.c`, `app/*.py`, `tools/gen_report.py` |
+| Classes (Code Browser) | `account/` — the Account and Ledger classes in C++ and Java from churn-demo (edited, moved and changed-and-moved code); `lib/` — `Cache` (abstract), `LruCache : Cache`, `Config` using `LruCache`; the new version adds `clear()`/`hits()` and `has()` |
 
 ## What the agent report shows (measured on CodeDelta 2.0.1, 7 Sep 2026)
 
@@ -28,8 +29,10 @@ Run it the way the GitHub Action runs a pull request — Churn + Agent Scan:
 - **AI SDK Inventory**, **Flagged Files** (22 scanned: 3 HIGH, 8 ELEVATED), **Agent Map**
 - The Code Browser opens with an **Agents** view of the same map
 
-Churn (new vs old): 55 files, 13 changed, 11 added, 4 deleted;
-CHG_LLOC 18, DEL_LLOC 14, ADD_LLOC 128, CRN_LLOC 160.
+Churn (new vs old): 62 files, 19 changed, 11 added, 4 deleted;
+CHG_LLOC 34, DEL_LLOC 21, ADD_LLOC 154, MOV_LLOC 46, CHM_LLOC 2, CRN_LLOC 209.
+Code Browser: Classes (6) — Account, Ledger (C++ and Java), Config, LruCache;
+the class visualiser shows LruCache inheriting Cache and Config talking to LruCache.
 
 Everything under `agent/` is inert: fake, non-working "agents" with no real keys,
 no network calls, never executed — CodeDelta only reads them as text. Antivirus
