@@ -4,9 +4,11 @@ Two versions of a small C + Python service (`old/`, `new/`). Between them the
 **build machinery changes** and the synthetic AI-agent files from
 `agent-scan-demo` sit under `agent/` in both versions.
 
-Run it the way the GitHub Action runs a pull request — Churn + Agent Scan:
+Run it the way the GitHub Action runs a pull request — Churn + Agent Scan. Run it from the app: **Try It — Demos → Churn + Agent Scan Demo → Run**. The app downloads the sample into its own folder (**View demo code** shows it); from the command line, point the tool at that folder:
 
-    python3 codedelta_server.py scan safety-demo/new safety-demo/old --mode churn_agent --html
+```bash
+codedelta-gui scan <folder>/new <folder>/old --mode churn_agent
+```
 
 ## What changes between old and new
 
@@ -20,7 +22,7 @@ Run it the way the GitHub Action runs a pull request — Churn + Agent Scan:
 | Source | `src/net.c`, `src/net.h` added; edits in `src/*.c`, `app/*.py`, `tools/gen_report.py` |
 | Classes (Code Browser) | `account/` — the Account and Ledger classes in C++ and Java from churn-demo (edited, moved and changed-and-moved code); `lib/` — `Cache` (abstract), `LruCache : Cache`, `Config` using `LruCache`; the new version adds `clear()`/`hits()` and `has()` |
 
-## What the agent report shows (measured on CodeDelta 2.0.1, 7 Sep 2026)
+## What the agent report shows (measured on CodeDelta 2.0.2)
 
 - **Build Files Changed In This Diff (18)**: 15 build/CI/packaging files plus 3 dependency manifests, with the two install hooks flagged
 - **Build & Deployment Surface (12)**: the inventory of the new version's build files

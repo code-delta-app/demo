@@ -2,22 +2,28 @@
 
 Sample projects used to demonstrate [CodeDelta](https://codedelta.app). They are
 fetched on demand by the tool's **Download demo code** option, and can also be
-read here on GitHub. Two demos:
+read here on GitHub. Three demos:
 
 - **`churn-demo/`** — an `old/` and `new/` version of the same small project in
   seven languages, to show CodeDelta's churn metrics (CHG / DEL / ADD / CRN /
   REP_CHURN). Also carries the canonical **TRUE_CHURN** demonstration
-  (v1.9.x): a one-line `package.json` dependency bump alongside the
+  a one-line `package.json` dependency bump alongside the
   `package-lock.json` the tooling regenerated from it — the lockfile churn is
   classified as generated ("npm lockfile") and subtotalled, so the report's
   TRUE_CHURN row/tile shows the churn the developers actually authored.
-  The `ledger.*` pairs (v2.0.2) show **moved code**: a 20-statement block
+  The `ledger.*` pairs show **moved code**: a 20-statement block
   moved to the far end of the file, and one line holding four statements
   moved with it — git counts ~25 lines deleted and ~25 added, CodeDelta
   counts them as MOV and reports the single real edit as CHG 1. Expected
   figures and the fixture rules are in `churn-demo/README.md`.
 - **`agent-scan-demo/`** — a project that *uses* AI at runtime, to show
-  CodeDelta's Agent Scan finding AI-SDK calls, agent patterns, and risky usage.
+  CodeDelta's Agent Scan finding AI-SDK calls, agent patterns, risky usage and
+  AI code hidden in encoded strings. Java, C# and C++ agent classes let the Code
+  Browser's Classes tab and class visualiser populate too.
+- **`safety-demo/`** — two versions of a small C + Python service whose build
+  machinery changes (install hooks, a deleted Jenkinsfile, new workflows, Debian
+  packaging) beside the synthetic agent files: the Churn + Agent Scan demo, every
+  safety surface in one run. Figures in `safety-demo/README.md`.
 
 ## ⚠️ Please read first — these files are deliberately suspicious-*looking*
 
@@ -54,14 +60,3 @@ documented. Per-file expectations are in each demo's own README.
 The CodeDelta tool fetches a **tagged release** of this repo matching its own
 version, so the demo a given build shows never changes underneath it. `main` may
 move ahead of released tools.
-
-## safety-demo (added 7 Sep 2026)
-
-A third sample for the app's **Churn + Agent Scan** demo: two versions of a small
-C + Python service whose build machinery changes (install hooks, deleted Jenkinsfile,
-new workflows, Debian packaging) beside the synthetic agent files. Shows the diff'd
-build-file alert and every other safety surface in one run. Figures in
-`safety-demo/README.md`.
-
-`agent-scan-demo` gained `java/`, `csharp/` and `cpp/` agent classes on 7 Sep 2026 so the
-Code Browser's Classes tab and class visualiser populate for the Agent Scan demo too.

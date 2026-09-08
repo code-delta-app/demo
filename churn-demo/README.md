@@ -24,7 +24,7 @@ the rest as **moved**:
   block. MOV_LLOC counts the four statements; MOV_SLOC counts the one line.
 - **One genuine edit** in `post()` (`balance += amount` becomes
   `balance = balance + amount`), so the file also carries real churn.
-- **One edit inside the moved block** (added 6 Sep 2026): the block's last
+- **One edit inside the moved block**: the block's last
   statement, `balance = closing`, becomes `balance = closing + interestPaid`.
   Edits trump moves: that statement is counted as CHANGED (churn), not as a
   move, and reported as **changed and moved** (CHM_LLOC). The Code Browser
@@ -48,10 +48,8 @@ Measured with the CodeDelta engine on these exact files. Git figures from
 MOV_SLOC is the number of distinct physical lines the moved statements occupy
 (engine 2.0.2 and later), plus the block's header line, which moved with it.
 CHM_LLOC is the changed-and-moved statement; it is inside CHG_LLOC, not
-MOV_LLOC. Engine 2.0.1 has no CHM_LLOC column and differs on MOV_SLOC (it
-counted one line per moved statement, and its JS/TS/Go readers carried the
-method header inside the first statement). Measured 6 Sep 2026 with the
-2.0.2-dev engine at commit 7498d53.
+MOV_LLOC. (CodeDelta 2.0.1 had no CHM_LLOC column and counted MOV_SLOC as one
+line per moved statement; the figures here are from CodeDelta 2.0.2.)
 
 Why the per-language MOV counts differ:
 
@@ -83,7 +81,7 @@ Why the per-language MOV counts differ:
   common substring; otherwise DEL + ADD. `balance += amount` to
   `balance = balance + amount` shares 47%.
 
-## Comment churn, an added file and a deleted file (added 7 Sep 2026)
+## Comment churn, an added file and a deleted file
 
 So that every tile on the app's panel has a value to show:
 
@@ -95,6 +93,6 @@ So that every tile on the app's panel has a value to show:
 - `audit.py` exists only in the new version (ADD_FILE 1, ADD_LLOC 8).
 - `legacy_export.sh` exists only in the old version (DEL_FILE 1, DEL_LLOC 5).
 
-Totals for the pair on CodeDelta 2.0.1 (7 Sep 2026): 18 files, 16 changed, 1 added,
+Totals for the pair on CodeDelta 2.0.2: 18 files, 16 changed, 1 added,
 1 deleted; CHG_LLOC 464, DEL_LLOC 207, ADD_LLOC 287, MOV_LLOC 162, CHM_LLOC 7,
 CRN_LLOC 958; CHG_COM 2, DEL_COM 2, ADD_COM 2.
