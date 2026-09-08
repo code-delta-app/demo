@@ -11,6 +11,11 @@ read here on GitHub. Two demos:
   `package-lock.json` the tooling regenerated from it — the lockfile churn is
   classified as generated ("npm lockfile") and subtotalled, so the report's
   TRUE_CHURN row/tile shows the churn the developers actually authored.
+  The `ledger.*` pairs (v2.0.2) show **moved code**: a 20-statement block
+  moved to the far end of the file, and one line holding four statements
+  moved with it — git counts ~25 lines deleted and ~25 added, CodeDelta
+  counts them as MOV and reports the single real edit as CHG 1. Expected
+  figures and the fixture rules are in `churn-demo/README.md`.
 - **`agent-scan-demo/`** — a project that *uses* AI at runtime, to show
   CodeDelta's Agent Scan finding AI-SDK calls, agent patterns, and risky usage.
 
@@ -28,6 +33,12 @@ anything harmful. They exist so CodeDelta has something to flag in a demo.
   network request is ever made. `raw_http.py` and `model_gateway.go` contain the
   *shape* of a call to an AI endpoint so the scanner can detect it — they are not
   invoked.
+- **The "committed credentials" are fakes by construction.** CodeDelta's
+  committed-credential detection needs something to find, so `openclaw/`
+  carries `backup.env` with **Amazon's own published documentation example
+  key** (`AKIAIOSFODNN7EXAMPLE` — printed in AWS's docs precisely so it can
+  appear in examples) and `deploy_key.pem`, a private-key *header* with no key
+  material. Neither opens anything, anywhere.
 - **The names describe functionality.** `chinese_models.py` illustrates detection
   of non-Western model SDKs (DeepSeek, Qwen, Zhipu) — it imports their SDK *names*
   so the scanner matches them; it calls nothing. `rogue_executor.py` shows the
@@ -43,3 +54,14 @@ documented. Per-file expectations are in each demo's own README.
 The CodeDelta tool fetches a **tagged release** of this repo matching its own
 version, so the demo a given build shows never changes underneath it. `main` may
 move ahead of released tools.
+
+## safety-demo (added 7 Sep 2026)
+
+A third sample for the app's **Churn + Agent Scan** demo: two versions of a small
+C + Python service whose build machinery changes (install hooks, deleted Jenkinsfile,
+new workflows, Debian packaging) beside the synthetic agent files. Shows the diff'd
+build-file alert and every other safety surface in one run. Figures in
+`safety-demo/README.md`.
+
+`agent-scan-demo` gained `java/`, `csharp/` and `cpp/` agent classes on 7 Sep 2026 so the
+Code Browser's Classes tab and class visualiser populate for the Agent Scan demo too.
