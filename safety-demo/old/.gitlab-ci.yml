@@ -1,0 +1,9 @@
+stages: [build]
+
+build:
+  stage: build
+  image: gcc:13
+  script:
+    - make
+  artifacts:
+    paths: [app]

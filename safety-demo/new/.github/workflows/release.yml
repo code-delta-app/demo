@@ -1,0 +1,16 @@
+name: Release
+on:
+  push:
+    tags: ["v*"]
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: make
+      - run: tar czf buildproj-${{ github.ref_name }}.tar.gz app README.md
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: buildproj-*.tar.gz

@@ -1,3 +1,6 @@
 *.db
 *.db-shm
 *.db-wal
+
+# scanner output never belongs in a sample
+out/

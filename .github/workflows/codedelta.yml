@@ -14,4 +14,4 @@ jobs:
         with: { fetch-depth: 0 }
       - uses: code-delta-app/action@v1
         with:
-          mode: both
+          mode: churn_agent   # default mode: churn + Agent Scan (no ML audit)
