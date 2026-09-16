@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meridian Helpdesk — Tickets</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Meridian Helpdesk</h1>
+    <input id="filter" type="search" placeholder="Filter tickets…" aria-label="Filter tickets">
+  </header>
+
+  <main>
+    <table id="tickets">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Login fails</td><td>open</td><td>High</td></tr>
+        <tr><td>2</td><td>Export broken</td><td>open</td><td>Normal</td></tr>
+        <tr><td>3</td><td>Feature request</td><td>open</td><td>Low</td></tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

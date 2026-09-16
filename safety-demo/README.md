@@ -1,43 +1,36 @@
-# safety-demo — Churn + Agent Scan, every safety surface in one run
+# Meridian Helpdesk — Churn + Agent Scan, every safety surface in one run
 
-Two versions of a small C + Python service (`old/`, `new/`). Between them the
-**build machinery changes** and the synthetic AI-agent files from
-`agent-scan-demo` sit under `agent/` in both versions.
+Two versions of the same product (`old/`, `new/`). Between them a release added the AI
+features — and with them the fifteen risky files described in `agent-scan-demo/README.md`
+— while the **build machinery** changed underneath: an install hook arrived in `setup.py`,
+`package.json` gained a hook, the `Makefile` and `Dockerfile` were modified, `CMakeLists.txt`,
+the `Jenkinsfile` and `Cargo.lock` were deleted, two GitHub workflows, `configure.ac`, an
+Autoconf macro, Debian packaging and `docker-compose.yml` were added. Twenty build files
+changed in one diff — the xz-utils entry route, in miniature.
 
-Run it the way the GitHub Action runs a pull request — Churn + Agent Scan. Run it from the app: **Try It — Demos → Churn + Agent Scan Demo → Run**. The app downloads the sample into its own folder (**View demo code** shows it); from the command line, point the tool at that folder:
+Run it the way the GitHub Action runs a pull request: **Try It — Demos → Churn + Agent
+Scan Demo → Run**, or:
 
 ```bash
 codedelta-gui scan <folder>/new <folder>/old --mode churn_agent
 ```
 
-## What changes between old and new
+## What the churn side shows
 
-| Kind | Files |
-|---|---|
-| Install / build hooks | `setup.py` added with an install hook; `package.json` gains a hook |
-| Build definitions | `Makefile` modified; `CMakeLists.txt` deleted; `configure.ac`, `m4/ax_check_net.m4` added |
-| CI / CD pipelines | `.github/workflows/ci.yml`, `.github/workflows/release.yml` added; `.gitlab-ci.yml` modified; `Jenkinsfile` deleted |
-| Packaging / containers | `Dockerfile` modified; `buildproj.spec` deleted; `debian/control`, `debian/rules`, `docker-compose.yml` added |
-| Dependency manifests | `Cargo.lock` deleted; `go.sum` added; `requirements.txt` modified |
-| Source | `src/net.c`, `src/net.h` added; edits in `src/*.c`, `app/*.py`, `tools/gen_report.py` |
-| Classes (Code Browser) | `account/` — the Account and Ledger classes in C++ and Java from churn-demo (edited, moved and changed-and-moved code); `lib/` — `Cache` (abstract), `LruCache : Cache`, `Config` using `LruCache`; the new version adds `clear()`/`hits()` and `has()` |
+Every churn tile is non-zero by construction:
 
-## What the agent report shows (measured on CodeDelta 2.0.2)
+| Tile | Where it comes from |
+|------|--------------------|
+| CHG / DEL / ADD | edits in `helpdesk/tickets.py` (a method added, one edited), `helpdesk/priority.py` (a loop rewritten in place), `helpdesk/legacy_csv.py` removed, `helpdesk/util_dates.py` added — plus the thirty-one new files |
+| MOV and CHM | `helpdesk/sla.py`: a function moved within the file verbatim, with one line edited inside the moved block ("changed and moved") |
+| Comment churn | `helpdesk/store.py`: a comment changed and two deleted; `helpdesk/sla.py`: one added |
+| REWRITE | `helpdesk/priority.py`: two statements torn out and rewritten where they stood |
+| Generated churn / TRUE_CHURN | `web/package-lock.json`: a version bump in a lockfile — counted in CHURN, subtotalled out of TRUE_CHURN |
+| DATA tiles | `native/tables/status_codes.c` (a table deleted, one added, one shrunk) and `native/tables/mime_types.c` (one grown) |
+| Build & Deployment Surface | the twenty build files above, the install hook first |
 
-- **Build Files Changed In This Diff (18)**: 15 build/CI/packaging files plus 3 dependency manifests, with the two install hooks flagged
-- **Build & Deployment Surface (12)**: the inventory of the new version's build files
-- **Committed Credentials (1)** and **Agent Infrastructure (6, 2 tier-3)** from `agent/openclaw/`, `agent/.claude/`, `agent/.mcp.json`
-- **Governance & Compliance**: data egress to CN and RU providers
-- **AI SDK Inventory**, **Flagged Files** (35 scanned: 4 CRITICAL, 2 HIGH, 11 ELEVATED — the agent files include the Java, C# and C++ agent classes; the four rogue-agent files are CRITICAL), **Agent Map**
-- The Code Browser opens with an **Agents** view of the same map
+Expected (LLOC): **CHG 27, DEL 31, ADD 229, CHURN 287, TRUE_CHURN 281**; files 12 changed,
+31 new, 5 deleted, 27 unchanged. The agent side of the same run: the fifteen CRITICAL
+cards of the Agent Scan demo, all of them new in this version.
 
-Churn (new vs old): 68 files, 19 changed, 11 added, 4 deleted;
-CHG_LLOC 34, DEL_LLOC 21, ADD_LLOC 154, MOV_LLOC 46, CHM_LLOC 2, CRN_LLOC 209.
-Code Browser: Classes (13) — Account, Ledger (C++ and Java), Config, LruCache, and the
-agent classes (OpenAiAssistant, SupportAgent, KernelPlanner, ShellPlugin, AzureChat,
-ModelGateway, OpenAiGateway, DeepSeekGateway);
-the class visualiser shows LruCache inheriting Cache and Config talking to LruCache.
-
-Everything under `agent/` is inert: fake, non-working "agents" with no real keys,
-no network calls, never executed — CodeDelta only reads them as text. Antivirus
-tooling may flag them; that is expected.
+Every figure was produced by the tool on these folders.

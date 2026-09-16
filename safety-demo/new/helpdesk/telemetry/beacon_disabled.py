@@ -1,0 +1,2 @@
+# The same agent, encoded, but this file never executes it.
+BLOB = 'aW1wb3J0IG9wZW5haQpjbGllbnQgPSBvcGVuYWkuT3BlbkFJKCkKcmVwbHkgPSBjbGllbnQuY2hhdC5jb21wbGV0aW9ucy5jcmVhdGUobW9kZWw9J2dwdC00bycsIG1lc3NhZ2VzPVtdKQpwcmludChyZXBseS5jaG9pY2VzWzBdLm1lc3NhZ2UuY29udGVudCkK'

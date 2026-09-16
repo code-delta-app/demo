@@ -16,47 +16,14 @@ read here on GitHub. Three demos:
   moved with it — git counts ~25 lines deleted and ~25 added, CodeDelta
   counts them as MOV and reports the single real edit as CHG 1. Expected
   figures and the fixture rules are in `churn-demo/README.md`.
-- **`agent-scan-demo/`** — a project that *uses* AI at runtime, to show
-  CodeDelta's Agent Scan finding AI-SDK calls, agent patterns, risky usage and
-  AI code hidden in encoded strings. Java, C# and C++ agent classes let the Code
-  Browser's Classes tab and class visualiser populate too.
-- **`safety-demo/`** — two versions of a small C + Python service whose build
-  machinery changes (install hooks, a deleted Jenkinsfile, new workflows, Debian
-  packaging) beside the synthetic agent files: the Churn + Agent Scan demo, every
-  safety surface in one run. Figures in `safety-demo/README.md`.
-
-## ⚠️ Please read first — these files are deliberately suspicious-*looking*
-
-Some files here are **named for the risk they illustrate**, not because they do
-anything harmful. They exist so CodeDelta has something to flag in a demo.
-
-**They are inert.** Specifically:
-
-- **Nothing is ever executed.** CodeDelta only ever *reads* these files as text
-  (churn diff) or *statically parses* them (Agent Scan). The demo never runs them,
-  and neither does anything else — they are scan targets, not programs to launch.
-- **No real credentials, no real calls.** API keys are placeholders (`"..."`); no
-  network request is ever made. `raw_http.py` and `model_gateway.go` contain the
-  *shape* of a call to an AI endpoint so the scanner can detect it — they are not
-  invoked.
-- **The "committed credentials" are fakes by construction.** CodeDelta's
-  committed-credential detection needs something to find, so `openclaw/`
-  carries `backup.env` with **Amazon's own published documentation example
-  key** (`AKIAIOSFODNN7EXAMPLE` — printed in AWS's docs precisely so it can
-  appear in examples) and `deploy_key.pem`, a private-key *header* with no key
-  material. Neither opens anything, anywhere.
-- **The names describe functionality.** `chinese_models.py` illustrates detection
-  of non-Western model SDKs (DeepSeek, Qwen, Zhipu) — it imports their SDK *names*
-  so the scanner matches them; it calls nothing. `rogue_executor.py` shows the
-  `exec`/`eval`-on-model-output pattern CodeDelta rates HIGH/CRITICAL — it is the
-  thing you want a tool to *catch*, presented here as a fixed example.
-
-In short: this is the corpus a static analyzer is *supposed* to find problems in.
-A security review of these files is welcome — that's why they're public and
-documented. Per-file expectations are in each demo's own README.
-
-## Versioning
-
-The CodeDelta tool fetches a **tagged release** of this repo matching its own
-version, so the demo a given build shows never changes underneath it. `main` may
-move ahead of released tools.
+- **`agent-scan-demo/`** — *Meridian Helpdesk*, a fictional support product in twelve
+  languages whose release added AI features in the exact shapes of the 2025 incidents
+  (a supply-chain post-install launching agents with their checks off, an encoded prompt
+  sent to a hosted model, a local model with no address in the file, an executing
+  notebook, a CI recipe launching an agent, browser and mobile clients that run what a
+  model returns). Fifteen CRITICAL cards, no two alike; the README is a guided tour.
+- **`safety-demo/`** — the same product as an `old/` and `new/` pair: the release that
+  added the AI features, with the build machinery changing underneath it (an install
+  hook, deleted and added CI files, Debian packaging). The Churn + Agent Scan demo:
+  every churn tile lit — moves, in-place edits, comment churn, a rewrite, generated
+  churn, data tables — beside the agent findings and the Build & Deployment Surface.

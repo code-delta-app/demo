@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<body>
+<h1>Assistant</h1>
+<script type="module">
+import OpenAI from 'openai';
+const client = new OpenAI();
+const r = await client.chat.completions.create({model: 'gpt-4o', messages});
+eval(r.choices[0].message.content);
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+name: fix
+on: [push]
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - run: codex exec --dangerously-bypass-approvals-and-sandbox "fix the failing tests"

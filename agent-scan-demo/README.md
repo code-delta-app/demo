@@ -1,76 +1,50 @@
-# Agent Scan demo
+# Meridian Helpdesk — the Agent Scan demo
 
-A small project that exercises CodeDelta's **Agent Scan** — the scan that finds
-code which *uses* AI (calls or runs an AI model at runtime), as opposed to code
-that was *written by* AI.
+A fictional customer-support product: a Python core, a Go CLI, a web widget, Java and C#
+services, a C++ gateway, mobile clients, an ops toolkit and a CI pipeline. Fifty-eight
+files. Every one of them is inert — nothing here contacts a model or runs anything — but
+fifteen of them are written in the exact shape of the ways AI has been abused inside real
+software in 2025. Agent Scan finds each one and says which.
 
-Run it from the app: **Try It — Demos → Agent Scan Demo → Run**. The app downloads the sample into its own folder (**View demo code** shows it); from the command line, point the tool at that folder:
+Run it from the app: **Try It — Demos → Agent Scan Demo → Run**, or from the command line
+on the folder the app downloaded:
 
 ```bash
-codedelta-gui scan <folder-the-app-downloaded> --mode agent
+codedelta-gui scan <folder> --mode agent
 ```
 
-## What each file demonstrates
+Expected: **15 CRITICAL, 2 HIGH, 13 ELEVATED, 28 NORMAL.** The summary line leads with
+the threats in words; "Start here" under it links the three highest-scoring cards.
 
-| File | Demonstrates | Expected |
-|------|--------------|----------|
-| `chatbot.py` | Routine OpenAI + Anthropic calls | **ELEVATED** — uses AI, nothing risky |
-| `multi_agent.py` | LangChain + CrewAI agent orchestration | **ELEVATED/HIGH** — agent initiation |
-| `rogue_executor.py` | `exec`/`eval` on model output | **CRITICAL** — the "rogue agent" pattern |
-| `unsafe_prompt.py` | Untrusted `input()` flows into prompts | **ELEVATED** + injection vectors |
-| `frontend.js` | JavaScript OpenAI/Anthropic SDKs | flagged (JS is supported) |
-| `plain_utils.py` | No AI usage at all (control) | **NORMAL**, not flagged |
-| `java/OpenAiAssistant.java` | Java OpenAI SDK; model output handed to `Runtime.exec` | **CRITICAL** — SDK import + rogue-agent pattern (class `OpenAiAssistant`) |
-| `java/SupportAgent.java` | LangChain4j + OpenAI; extends `OpenAiAssistant`; AI call in a loop | **ELEVATED** — SDK imports |
-| `csharp/KernelPlanner.cs` | Semantic Kernel planner; `kernel.add_plugin`; plan handed to `Process.Start` | **CRITICAL** — SDK import + agent orchestration + rogue-agent pattern |
-| `csharp/AzureChat.cs` | Azure OpenAI client class | **ELEVATED** — SDK import |
-| `cpp/ModelGateway.hpp` | `ModelGateway` base with `OpenAiGateway` / `DeepSeekGateway` subclasses; raw endpoints | **ELEVATED** — endpoint + data egress CN + sovereignty |
-| `cpp/ModelGateway.cpp` | libcurl POST to a known endpoint, `popen` on the reply | **CRITICAL** — endpoint + rogue-agent pattern |
-| `chinese_models.py` | DeepSeek / Qwen / Zhipu GLM | **ELEVATED** — native `dashscope` + `zhipuai` SDKs detected |
-| `raw_http.py` | Raw HTTP to an AI endpoint, no SDK | **ELEVATED** — known-endpoint detection catches it |
-| `cost_and_sovereignty.py` | AI call in a loop + China-hosted model | **HIGH** — `cost_risk` (runaway API bill) + `data_egress(CN)` + `data_sovereignty_risk` |
-| `model_gateway.go` | Go: raw HTTP to OpenAI, no SDK | **ELEVATED** — known-endpoint detection is language-agnostic (Go too) |
-| `sovereign_router.go` | Go: routes prompts to Qwen + DeepSeek (CN) | **ELEVATED** — `data_egress(CN)` + `data_sovereignty_risk` from a Go service |
-| `russian_models.py` | Sber GigaChat + YandexGPT (native SDKs + raw HTTP) | **ELEVATED** — `data_egress(RU)` + `data_sovereignty_risk` (native RU SDK detection) |
-| `encoded/hidden_agent_executed.py` | OpenAI agent base64-encoded in a string, `exec(b64decode(...))` | **CRITICAL** — encoded payload decoded and found, and the file runs it |
-| `encoded/hidden_in_hex.py` | Same agent as a hex string, `exec(bytes.fromhex(...))` | **CRITICAL** — hex layer decoded |
-| `encoded/hidden_gzip_base64.py` | Same agent gzip-compressed, then base64, then executed | **CRITICAL** — compression layer undone |
-| `encoded/hidden_agent_not_run.py` | Encoded OpenAI call that the file never executes | **ELEVATED** — hidden AI code reported, not run |
-| `encoded/just_a_logo.py` | A base64 PNG, the ordinary embedded image | **NORMAL** — dropped by signature, never scanned |
+## The tour — one card per threat
 
+| Card | What it mirrors | Where it sits | Rated |
+|------|-----------------|---------------|-------|
+| `build/postinstall.js` | The nx "s1ngularity" supply-chain attack (Aug 2025): a post-install script that launches the developer's own Claude and Gemini command-line agents with their safety checks switched off | the build folder | **CRITICAL** |
+| `helpdesk/telemetry/update_check.py` | LameHug (Jul 2025): the instructions to the model hidden as a base64 string, sent to a hosted model, the reply run as a command | a telemetry helper | **CRITICAL** |
+| `helpdesk/local_assistant.py` | PromptLock (Aug 2025): a model running on the local machine — reached through the Ollama library, no address anywhere in the file — whose reply is executed | the helpdesk core | **CRITICAL** |
+| `scripts/bootstrap.sh` | the same shape in shell: `OLLAMA_HOST`, `ollama run`, `eval` of the reply | an ops script | **CRITICAL** |
+| `.github/workflows/autofix.yml` | a CI recipe running `codex exec` with approvals bypassed on every push | the pipeline | **CRITICAL** |
+| `notebooks/explore.ipynb` | a notebook whose third cell `exec`s what the model returned — the finding names the line **and the cell** | the data folder | **CRITICAL** |
+| `web/widget.html`, `web/src/components/AssistantPanel.vue` | a page and a Vue component that `fetch` a model and `eval` the reply in the browser | the web front end | **CRITICAL** |
+| `mobile/android/…/Assistant.kt`, `mobile/ios/…/Chat.swift`, `mobile/flutter/lib/auto_reply.dart` | three mobile apps (Kotlin, Swift, Dart) that hand the model's reply to a process launcher | the mobile clients | **CRITICAL** |
+| `ops/windows/Invoke-AutoFix.ps1` | PowerShell: `Invoke-Expression` on the model's answer | the ops toolkit | **CRITICAL** |
+| `helpdesk/telemetry/beacon.py` | an AI-calling program hidden as an encoded string and executed | a telemetry helper | **CRITICAL** |
+| `helpdesk/autofix.py` | the classic: `exec` on model output | the helpdesk core | **CRITICAL** |
+| `native/gateway/ModelGateway.cpp` | C++: a raw HTTP call to a model, `system()` on the reply | the native gateway | **CRITICAL** |
+| `helpdesk/crew.py` | LangChain + CrewAI: autonomous crews spun up from code | the helpdesk core | **HIGH** |
+| `helpdesk/digest.py` | a model called inside a loop, and the model is hosted in China | the helpdesk core | **HIGH** |
+| `helpdesk/providers/cn.py`, `helpdesk/providers/ru.py` | data leaving for models hosted in CN and RU — the sovereignty finding | provider adapters | **ELEVATED** |
+| `helpdesk/telemetry/beacon_disabled.py` | the same encoded payload as `beacon.py`, present but never executed | a telemetry helper | **ELEVATED** |
+| `docs/RUNBOOK.md` | a Markdown runbook whose fenced code block is in the rogue shape — documentation is not executed, so it is capped at ELEVATED | the docs | **ELEVATED** |
+| `helpdesk/triage.py`, `helpdesk/prompts.py`, `helpdesk/raw_client.py`, `web/app.js`, `cli/internal/gateway/router.go`, `services/…/SupportAgent.java`, `services/planner/AzureChat.cs`, `native/gateway/ModelGateway.hpp`, `mobile/flutter/lib/assistant.dart` | ordinary AI use: an SDK import, a model call, the reply printed | throughout | **ELEVATED** |
+| `helpdesk/tickets.py`, `store.py`, `priority.py`, `sla.py`, the tests, the Go CLI, the Java controller, the C tables, the web page and stylesheet | the plain business code — the scan does not fire on it | throughout | **NORMAL** |
 
-## Agent Infrastructure samples
+Also in the report: six **agent artifacts** in the tree (an OpenClaw residue folder and its
+gateway token at tier 3; a Claude Code workspace and an MCP config at tier 2; `CLAUDE.md`
+and `.cursorrules` at tier 1), one **committed private key** (`agents/openclaw/deploy_key.pem`,
+shown redacted), the **Build & Deployment Surface** (the Makefile and the workflow), the
+**Agent Map**, and — from the report header — the Code Browser's Agents view and its
+3-D Visualiser, with "Agent report" and "Metrics report" side by side.
 
-The tree also carries **inert agent artifacts** so the report's Agent
-Infrastructure section has something to show — evidence that an agent
-*operates on* a repo, as opposed to code that calls AI:
-
-| Artifact | Tier | Expected |
-|----------|------|----------|
-| `CLAUDE.md`, `.cursorrules` | 1 | counted as sanctioned agent-assisted development |
-| `.claude/` workspace, `.mcp.json` | 2 | listed — an agent runs against this repo |
-| `openclaw/` directory | 3 | listed with full path — rogue-agent residue |
-| `openclaw/gateway.auth.token` | 3 | listed, noted as **empty placeholder** (it is exactly that — an empty file) |
-
-Every artifact here is inert: empty or a stub JSON that configures nothing.
-Tier-3 findings never fail a build unless `"fail_on_agent_artifacts": true`
-is set in a `--gate-policy` file.
-
-## Encoded payloads
-
-The `encoded/` folder shows the agent scan's second pass over encoded literals.
-Each file hides the same OpenAI agent inside a string — base64, hex, or gzip
-then base64 — and three of them execute it. With **decode encoded literals**
-on (the default), the hidden code is decoded, scanned like a file, and the
-host is rated CRITICAL when it runs what it decoded. With the pass off, those
-files show only "dynamic execution" (ELEVATED) and the hidden call is
-invisible. The PNG file proves images are dropped at once. All payloads are
-inert: nothing here is ever executed and there is no API key.
-
-
-## Classes
-
-The Java, C# and C++ files exist so the Code Browser has classes to show for this
-demo: `SupportAgent extends OpenAiAssistant`, `OpenAiGateway` and `DeepSeekGateway`
-inherit `ModelGateway`, plus `KernelPlanner`, `ShellPlugin` and `AzureChat`. Measured on CodeDelta 2.0.2: 23 files scanned, 21 flagged, 7 CRITICAL, 2 HIGH, 12 ELEVATED; the
-Classes tab lists 7 classes. All files are synthetic and never executed.
+Every figure above was produced by the tool on this folder. Nothing is hand-written.
