@@ -1,11 +1,7 @@
-cmake_minimum_required(VERSION 3.16)
-project(buildproj C)
-set(CMAKE_C_STANDARD 11)
-add_executable(app
-  src/main.c
-  src/parser.c
-  src/config.c
-  src/cache.c
-  src/log.c
-  src/tables.c)
-target_include_directories(app PRIVATE src)
+# Meridian Helpdesk — native model gateway (native/gateway/ModelGateway.cpp)
+cmake_minimum_required(VERSION 3.20)
+project(meridian_gateway CXX)
+set(CMAKE_CXX_STANDARD 17)
+find_package(CURL REQUIRED)
+add_library(gateway native/gateway/ModelGateway.cpp)
+target_link_libraries(gateway PRIVATE CURL::libcurl)

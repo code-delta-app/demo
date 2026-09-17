@@ -1,16 +1,19 @@
-CC      = cc
-CFLAGS  = -O2 -std=c11
-OBJS    = src/main.o src/parser.o src/config.o src/cache.o src/log.o src/tables.o
+.PHONY: test lint build clean
 
-all: app
+PY ?= python3
 
-app: $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+test:
+	$(PY) -m pytest -q tests
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+lint:
+	$(PY) -m pyflakes helpdesk tests || true
+	gofmt -l cli
+
+build:
+	$(PY) -c "import helpdesk; print('helpdesk', helpdesk.__version__)"
+	cd cli && go build ./...
 
 clean:
-	rm -f app $(OBJS)
-
-.PHONY: all clean
+	find . -name '__pycache__' -type d -prune -exec rm -rf {} +
+	find . -name '*.pyc' -delete
+	rm -f cli/main cli/cli

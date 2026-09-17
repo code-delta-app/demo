@@ -1,5 +1,11 @@
+# Meridian Helpdesk core (helpdesk/) — runtime dependencies
 flask==3.0.3
-requests==2.32.3
-gunicorn==22.0.0
-pytest==8.2.0
-prometheus-client==0.20.0
+sqlalchemy==2.0.30
+pyyaml==6.0.1
+python-dateutil==2.9.0
+# 2.0: the assistant features (helpdesk/triage.py, crew.py, digest.py, providers/)
+openai==1.35.0
+anthropic==0.30.0
+langchain==0.2.5
+crewai==0.36.0
+ollama==0.2.1
