@@ -1,4 +1,4 @@
-.PHONY: test lint build clean
+.PHONY: test lint build clean check
 
 PY ?= python3
 
@@ -12,6 +12,8 @@ lint:
 build:
 	$(PY) -c "import helpdesk; print('helpdesk', helpdesk.__version__)"
 	cd cli && go build ./...
+
+check: lint test
 
 clean:
 	find . -name '__pycache__' -type d -prune -exec rm -rf {} +
