@@ -10,6 +10,7 @@ KEYWORD_WEIGHTS = {
     "fails": 2,
     "error": 1,
     "slow": 1,
+    "timeout": 2,
     "broken": 2,
     "security": 3,
     "data loss": 3,
@@ -28,9 +29,14 @@ def score_priority(subject: str, body: str, age_hours: float = 0.0) -> int:
     raw = max(hits) if hits else 0
 
     # Older unresolved tickets escalate.
-    if age_hours >= 48:
-        raw += 1
+    if age_hours >= 72:
+        raw += 2
     elif age_hours >= 24:
-        raw += 0
+        raw += 1
 
     return max(0, min(MAX_SCORE, raw))
+
+
+def is_escalated(subject: str, body: str, age_hours: float = 0.0) -> bool:
+    """True when a ticket has reached the top band."""
+    return score_priority(subject, body, age_hours) >= MAX_SCORE

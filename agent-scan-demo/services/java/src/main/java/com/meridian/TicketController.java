@@ -23,8 +23,9 @@ public class TicketController {
 
     private final List<TicketDto> tickets = new ArrayList<>(List.of(
         new TicketDto(1, "Login fails", "open", 2),
-        new TicketDto(2, "Export broken", "open", 1),
-        new TicketDto(3, "Feature request", "open", 0)
+        new TicketDto(2, "Export broken", "open", 2),
+        new TicketDto(3, "Feature request", "open", 0),
+        new TicketDto(4, "Password reset loop", "open", 3)
     ));
 
     @GetMapping
