@@ -1,0 +1,17 @@
+stages: [build, deploy]
+
+build:
+  stage: build
+  image: gcc:13
+  script:
+    - ./configure
+    - make
+    - make check
+  artifacts:
+    paths: [app]
+
+deploy:
+  stage: deploy
+  only: [tags]
+  script:
+    - scp app deploy@prod.example.com:/opt/buildproj/
