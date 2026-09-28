@@ -40,3 +40,8 @@ def score_priority(subject: str, body: str, age_hours: float = 0.0) -> int:
 def is_escalated(subject: str, body: str, age_hours: float = 0.0) -> bool:
     """True when a ticket has reached the top band."""
     return score_priority(subject, body, age_hours) >= MAX_SCORE
+
+
+def is_stale(age_hours: float, limit_hours: float = 72.0) -> bool:
+    """True when a ticket has waited longer than the service limit."""
+    return age_hours > limit_hours
