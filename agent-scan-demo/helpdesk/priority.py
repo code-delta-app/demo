@@ -50,3 +50,8 @@ def is_stale(age_hours: float, limit_hours: float = 72.0) -> bool:
 def hours_until_stale(age_hours: float, limit_hours: float = 72.0) -> float:
     """Hours left before a ticket passes the service limit (0 once it has)."""
     return max(0.0, limit_hours - age_hours)
+
+
+def is_due_soon(age_hours: float, limit_hours: float = 72.0, window_hours: float = 12.0) -> bool:
+    """True when a ticket will pass the service limit within the window."""
+    return 0.0 < hours_until_stale(age_hours, limit_hours) <= window_hours
