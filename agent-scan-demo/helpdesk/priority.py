@@ -45,3 +45,8 @@ def is_escalated(subject: str, body: str, age_hours: float = 0.0) -> bool:
 def is_stale(age_hours: float, limit_hours: float = 72.0) -> bool:
     """True when a ticket has waited longer than the service limit."""
     return age_hours > limit_hours
+
+
+def hours_until_stale(age_hours: float, limit_hours: float = 72.0) -> float:
+    """Hours left before a ticket passes the service limit (0 once it has)."""
+    return max(0.0, limit_hours - age_hours)
