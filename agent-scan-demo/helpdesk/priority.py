@@ -55,3 +55,8 @@ def hours_until_stale(age_hours: float, limit_hours: float = 72.0) -> float:
 def is_due_soon(age_hours: float, limit_hours: float = 72.0, window_hours: float = 12.0) -> bool:
     """True when a ticket will pass the service limit within the window."""
     return 0.0 < hours_until_stale(age_hours, limit_hours) <= window_hours
+
+
+def is_overdue(age_hours: float, limit_hours: float = 72.0) -> bool:
+    """True once a ticket has passed the service limit by more than a day."""
+    return age_hours > limit_hours + 24.0
