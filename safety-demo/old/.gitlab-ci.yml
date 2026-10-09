@@ -1,9 +1,8 @@
-stages: [build]
-
-build:
-  stage: build
-  image: gcc:13
+# Meridian Helpdesk — GitLab pipeline (mirror of the GitHub one)
+stages: [test]
+test:
+  stage: test
+  image: python:3.12
   script:
-    - make
-  artifacts:
-    paths: [app]
+    - pip install -r requirements.txt
+    - python -m pytest -q tests

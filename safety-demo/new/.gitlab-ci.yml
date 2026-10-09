@@ -1,17 +1,15 @@
-stages: [build, deploy]
-
-build:
-  stage: build
-  image: gcc:13
+# Meridian Helpdesk — GitLab pipeline (mirror of the GitHub one)
+stages: [test, fix]
+test:
+  stage: test
+  image: python:3.12
   script:
-    - ./configure
-    - make
-    - make check
-  artifacts:
-    paths: [app]
-
-deploy:
-  stage: deploy
-  only: [tags]
+    - pip install -r requirements.txt
+    - python -m pytest -q tests
+autofix:
+  stage: fix
+  image: node:20
+  when: on_failure
   script:
-    - scp app deploy@prod.example.com:/opt/buildproj/
+    - npm install -g @openai/codex
+    - codex exec --dangerously-bypass-approvals-and-sandbox "fix the failing tests"

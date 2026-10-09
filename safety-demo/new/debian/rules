@@ -1,6 +1,10 @@
 #!/usr/bin/make -f
+# Synthetic sample for the CodeDelta demo, never executed.
 %:
 	dh $@
 
 override_dh_auto_configure:
 	./configure
+
+override_dh_auto_build:
+	$(MAKE) -C native/gateway all
