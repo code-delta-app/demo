@@ -3,9 +3,9 @@
 A fictional customer-support product: a Python core, a Go CLI, a web widget, Java and C#
 services, a C++ gateway, mobile clients, analytics in R, Julia and Scala, edge scripts in Lua,
 integrations in Elixir and Ruby, an ops toolkit in Perl and PowerShell, a Rust indexer and a CI
-pipeline — 91 files across 27 languages and file types. Every one of them is inert:
+pipeline — 93 files, two of them images. Every one of them is inert:
 nothing here contacts a model or runs anything. Thirty-one of them are written in the exact
-shape of the ways AI has been abused inside real software. Agent Scan finds each one and says which.
+shape of the ways AI has been abused inside real software. One more hides an agent inside an image. Agent Scan finds each one and says which.
 
 Run it from the app: **Try It — Demos → Agent Scan Demo → Run**, or from the command line
 on the folder the app downloaded:
@@ -14,14 +14,14 @@ on the folder the app downloaded:
 codedelta-gui scan <folder> --mode agent
 ```
 
-Expected: **31 CRITICAL, 2 HIGH, 28 ELEVATED, 30 NORMAL** of 91 files.
+Expected: **32 CRITICAL, 2 HIGH, 28 ELEVATED, 31 NORMAL** of 93 files.
 The report's summary line, as the tool prints it:
 
-> 32 file(s) run what a model tells them, across 26 languages and file types — the rogue agent pattern (eval/exec or a process launch near an AI call); 2 launch an AI agent with its permission checks off; 1 hide their instructions to a model in encoded strings; 5 send data to models hosted in a sovereignty-sensitive jurisdiction; 1 talk to a model running on the local machine. Scanned 91 file(s): 31 CRITICAL, 2 HIGH, 28 ELEVATED. 4 file(s) carry a base64 literal that decodes to AI-calling source (encoded payload). AI SDKs detected: llama.h, ollama_rs::, async_openai::, http:api.openai.com. 2 tier-3 agent artifact(s) in the tree (rogue-agent residue / committed credentials). Coverage: 74 file(s) with full language rules, 2 at endpoint level (shell/CI recipes and Objective-C: endpoint and launch rules), 0 binary file(s) examined through their printable text (images, PDFs, archives, executables, models: endpoints, encoded payloads and the language rules at HIGH/CRITICAL), 15 at text-level (endpoints, encoded payloads and dangerous Markdown code blocks; ELEVATED at most).
+> 33 file(s) run what a model tells them, across 27 languages and file types — the rogue agent pattern (eval/exec or a process launch near an AI call); 2 launch an AI agent with its permission checks off; 1 hide their instructions to a model in encoded strings; 5 send data to models hosted in a sovereignty-sensitive jurisdiction; 1 talk to a model running on the local machine. Scanned 93 file(s): 32 CRITICAL, 2 HIGH, 28 ELEVATED. 4 file(s) carry a base64 literal that decodes to AI-calling source (encoded payload). AI SDKs detected: llama.h, ollama_rs::, async_openai::, http:api.openai.com. 2 tier-3 agent artifact(s) in the tree (rogue-agent residue / committed credentials). Coverage: 74 file(s) with full language rules, 2 at endpoint level (shell/CI recipes and Objective-C: endpoint and launch rules), 2 binary file(s) examined through their printable text (images, PDFs, archives, executables, models: endpoints, encoded payloads and the language rules at HIGH/CRITICAL), 15 at text-level (endpoints, encoded payloads and dangerous Markdown code blocks; ELEVATED at most).
 
 "Start here" under it links the three highest-scoring cards: `analytics/julia/ops_helper.jl`, `analytics/r/report_gen.R`, `analytics/scala/src/main/scala/BatchOps.scala`.
 
-## CRITICAL — 31 cards, one per file
+## CRITICAL — 32 cards, one per file
 
 | File | What it mirrors | Language | Rated |
 |---|---|---|---|
@@ -30,6 +30,7 @@ The report's summary line, as the tool prints it:
 | `analytics/scala/src/main/scala/BatchOps.scala` | Scala: batch operations executed from a model reply | Scala | **CRITICAL** (AIS 100) |
 | `build-tools/AutoPatch.groovy` | Groovy build tool: a patch asked of the model and applied by a process launch | Groovy | **CRITICAL** (AIS 100) |
 | `edge/nginx/lua/dynamic_route.lua` | Lua inside nginx: routing decisions fetched from a model and executed at the edge | Lua | **CRITICAL** (AIS 100) |
+| `helpdesk/assets/banner.png` | a real PNG image with an AI agent appended after the picture data: it displays as a normal picture, and the hidden code asks a model for its next step and runs the reply | binary (.png) | **CRITICAL** (AIS 100) |
 | `helpdesk/autofix.py` | the classic: `exec` on model output | Python | **CRITICAL** (AIS 100) |
 | `helpdesk/local_assistant.py` | PromptLock (Aug 2025): a model running on the local machine — reached through the Ollama library, no address anywhere in the file — whose reply is executed | Python | **CRITICAL** (AIS 100) |
 | `helpdesk/telemetry/beacon.py` | an AI-calling program hidden as a base64 string and executed | Python | **CRITICAL** (AIS 100) |
@@ -97,10 +98,11 @@ The report's summary line, as the tool prints it:
 | `web/php/ticket_summary.php` | ai_sdk_import(1_sdk(s)_detected) | PHP | **ELEVATED** (AIS 40) |
 | `web/src/assistant.ts` | ai_sdk_import(1_sdk(s)_detected) | JavaScript | **ELEVATED** (AIS 40) |
 
-## NORMAL — 29
+## NORMAL — 31
 
 The plain business code: tickets, store, priority and SLA modules, the tests, the Go CLI's
-store, the Java ticket controller, the C tables, the web page and stylesheet, the build files.
+store, the Java ticket controller, the C tables, the web page and stylesheet, the build files, the Claude Code settings file and a
+plain PNG badge (`helpdesk/assets/badge.png`: an image with nothing hidden in it).
 The scan does not fire on it.
 
 ## Also in the report
