@@ -3,7 +3,7 @@
 A fictional customer-support product: a Python core, a Go CLI, a web widget, Java and C#
 services, a C++ gateway, mobile clients, analytics in R, Julia and Scala, edge scripts in Lua,
 integrations in Elixir and Ruby, an ops toolkit in Perl and PowerShell, a Rust indexer and a CI
-pipeline — 90 files across 27 languages and file types. Every one of them is inert:
+pipeline — 91 files across 27 languages and file types. Every one of them is inert:
 nothing here contacts a model or runs anything. Thirty-one of them are written in the exact
 shape of the ways AI has been abused inside real software. Agent Scan finds each one and says which.
 
@@ -14,10 +14,10 @@ on the folder the app downloaded:
 codedelta-gui scan <folder> --mode agent
 ```
 
-Expected: **31 CRITICAL, 2 HIGH, 28 ELEVATED, 29 NORMAL** of 90 files.
+Expected: **31 CRITICAL, 2 HIGH, 28 ELEVATED, 30 NORMAL** of 91 files.
 The report's summary line, as the tool prints it:
 
-> 32 file(s) run what a model tells them, across 26 languages and file types — the rogue agent pattern (eval/exec or a process launch near an AI call); 2 launch an AI agent with its permission checks off; 1 hide their instructions to a model in encoded strings; 5 send data to models hosted in a sovereignty-sensitive jurisdiction; 1 talk to a model running on the local machine. Scanned 90 file(s): 31 CRITICAL, 2 HIGH, 28 ELEVATED. 4 file(s) carry a base64 literal that decodes to AI-calling source (encoded payload). AI SDKs detected: llama.h, ollama_rs::, async_openai::, http:api.openai.com. 2 tier-3 agent artifact(s) in the tree (rogue-agent residue / committed credentials). Coverage: 74 file(s) with full language rules, 2 at endpoint level (shell/CI recipes and Objective-C: endpoint and launch rules), 14 at text-level (endpoints, encoded payloads and dangerous Markdown code blocks; ELEVATED at most). 
+> 32 file(s) run what a model tells them, across 26 languages and file types — the rogue agent pattern (eval/exec or a process launch near an AI call); 2 launch an AI agent with its permission checks off; 1 hide their instructions to a model in encoded strings; 5 send data to models hosted in a sovereignty-sensitive jurisdiction; 1 talk to a model running on the local machine. Scanned 91 file(s): 31 CRITICAL, 2 HIGH, 28 ELEVATED. 4 file(s) carry a base64 literal that decodes to AI-calling source (encoded payload). AI SDKs detected: llama.h, ollama_rs::, async_openai::, http:api.openai.com. 2 tier-3 agent artifact(s) in the tree (rogue-agent residue / committed credentials). Coverage: 74 file(s) with full language rules, 2 at endpoint level (shell/CI recipes and Objective-C: endpoint and launch rules), 0 binary file(s) examined through their printable text (images, PDFs, archives, executables, models: endpoints, encoded payloads and the language rules at HIGH/CRITICAL), 15 at text-level (endpoints, encoded payloads and dangerous Markdown code blocks; ELEVATED at most).
 
 "Start here" under it links the three highest-scoring cards: `analytics/julia/ops_helper.jl`, `analytics/r/report_gen.R`, `analytics/scala/src/main/scala/BatchOps.scala`.
 
