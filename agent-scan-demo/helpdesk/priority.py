@@ -60,3 +60,8 @@ def is_due_soon(age_hours: float, limit_hours: float = 72.0, window_hours: float
 def is_overdue(age_hours: float, limit_hours: float = 72.0) -> bool:
     """True once a ticket has passed the service limit by more than a day."""
     return age_hours > limit_hours + 24.0
+
+
+def hours_overdue(age_hours: float, limit_hours: float = 72.0) -> float:
+    """Hours a ticket has spent past the service limit (0 until it passes)."""
+    return max(0.0, age_hours - limit_hours)
