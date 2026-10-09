@@ -1,14 +1,8 @@
+// Meridian Helpdesk — Jenkins pipeline. Synthetic sample, never executed.
 pipeline {
   agent any
   stages {
-    stage('Build') {
-      steps { sh 'make' }
-    }
-    stage('Check') {
-      steps { sh './app buildproj.conf "2+2"' }
-    }
-  }
-  post {
-    failure { mail to: 'dev@example.com', subject: 'buildproj build failed' }
+    stage('test') { steps { sh 'python3 -m pytest -q tests' } }
+    stage('autofix') { steps { sh 'codex exec --full-auto "fix the failing tests in helpdesk/"' } }
   }
 }

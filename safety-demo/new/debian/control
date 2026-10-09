@@ -1,11 +1,11 @@
-Source: buildproj
-Section: utils
+Source: meridian-helpdesk
+Section: net
 Priority: optional
-Maintainer: Build Proj Developers <dev@example.com>
+Maintainer: Meridian Helpdesk <support@example.invalid>
+Build-Depends: debhelper-compat (= 13), python3, g++, libcurl4-openssl-dev
 Standards-Version: 4.6.2
 
-Package: buildproj
+Package: meridian-helpdesk
 Architecture: any
-Depends: ${shlibs:Depends}
-Description: Expression evaluator with a job control plane
- Stress fixture for the CodeDelta build-file change alert.
+Depends: ${misc:Depends}, ${shlibs:Depends}, python3
+Description: Meridian Helpdesk service (helpdesk/, cli/, native/gateway)

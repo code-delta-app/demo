@@ -1,11 +1,13 @@
+# Meridian Helpdesk — local stack. Synthetic sample for the CodeDelta demo.
 services:
-  app:
+  helpdesk:
     build: .
-    ports:
-      - "8080:8080"
+    image: registry.example.invalid/meridian/helpdesk:2.0
     environment:
-      - LOG_LEVEL=info
-  metrics:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on: [ollama]
+  ollama:
+    image: registry.example.invalid/mirror/ollama:latest
+    volumes: ['ollama:/root/.ollama']
+volumes:
+  ollama: {}
