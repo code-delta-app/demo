@@ -65,3 +65,8 @@ def is_overdue(age_hours: float, limit_hours: float = 72.0) -> bool:
 def hours_overdue(age_hours: float, limit_hours: float = 72.0) -> float:
     """Hours a ticket has spent past the service limit (0 until it passes)."""
     return max(0.0, age_hours - limit_hours)
+
+
+def days_overdue(age_hours: float, limit_hours: float = 72.0) -> float:
+    """Whole days a ticket has spent past the service limit."""
+    return hours_overdue(age_hours, limit_hours) // 24.0
