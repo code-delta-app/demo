@@ -66,8 +66,8 @@ Every churn tile is non-zero by construction:
 | DATA tiles | `native/tables/status_codes.c` (a table deleted, one added, one shrunk) and `native/tables/mime_types.c` (one grown) |
 | Build Files Changed | the 20 files above, hooks first |
 
-Expected (LLOC): **CHG 20, DEL 26, ADD 314, CHURN 360, TRUE_CHURN 354**
-(6 generated); files 12 changed, 49 new, 4 deleted, 42 unchanged. The changed-file rows the demo
+Expected (LLOC): **CHG 20, DEL 26, ADD 2020, CHURN 2066, TRUE_CHURN 2060**
+(6 generated); files 18 changed, 50 new, 4 deleted, 42 unchanged. The changed-file rows the demo
 page checks against its frozen values:
 
 | File | CHG | DEL | ADD | CRN | REP_CHURN |
@@ -75,6 +75,7 @@ page checks against its frozen values:
 | `.gitlab-ci.yml` | 1 | 0 | 7 | 8 | 0.88 |
 | `Dockerfile` | 1 | 1 | 1 | 3 | 0.67 |
 | `Makefile` | 2 | 0 | 2 | 4 | 0.50 |
+| `helpdesk/__init__.py` | 0 | 0 | 11 | 11 | 1.00 |
 | `helpdesk/priority.py` | 1 | 4 | 4 | 9 | 0.89 |
 | `helpdesk/sla.py` | 1 | 0 | 0 | 1 | 0.00 |
 | `helpdesk/store.py` | 0 | 0 | 0 | 0 |  |
@@ -84,8 +85,39 @@ page checks against its frozen values:
 | `package.json` | 4 | 0 | 3 | 7 | 0.43 |
 | `requirements.txt` | 0 | 0 | 6 | 6 | 1.00 |
 | `web/package-lock.json` | 6 | 0 | 0 | 6 | 0.00 |
+| `web/third_party/colour-tokens/index.js` | 0 | 0 | 230 | 230 | 1.00 |
+| `web/third_party/merge-deep/index.js` | 0 | 0 | 230 | 230 | 1.00 |
+| `web/third_party/num-check/index.js` | 0 | 0 | 230 | 230 | 1.00 |
+| `web/third_party/text-pad/index.js` | 0 | 0 | 230 | 230 | 1.00 |
+| `web/third_party/time-words/index.js` | 0 | 0 | 230 | 230 | 1.00 |
 
-The agent side of the same run: **32 CRITICAL, 3 HIGH, 28 ELEVATED** — the
-Agent Scan demo's cards plus the CI recipe and the Dockerfile, all of them new in this version.
+The agent side of the same run: **32 CRITICAL, 9 HIGH, 28 ELEVATED** — the
+Agent Scan demo's cards plus the CI recipe and the Dockerfile, all of them new in this version,
+and the six hijacked library files below (obfuscated code, HIGH).
+
+## What the Threat index shows — a dependency hijack
+
+This release also carries the pattern measured in the paper
+[The change is the threat](https://codedelta.app/paper-change-is-the-threat.html): bundled libraries that quietly grow
+in a release that has no reason to touch them.
+
+- Five small libraries under `web/third_party/` (`colour-tokens`, `text-pad`, `merge-deep`, `num-check`, `time-words`)
+  each gain **one identical line: 230 statements, 5,870 characters, obfuscated** — churn shows +230 in each library's only
+  file.
+- A sixth, `date-lite`, gains a **new 545-statement file**, `lib/sync.js`, also obfuscated.
+- `helpdesk/__init__.py`, the Python package's start-up file, gains **11 statements** run at import time. Only churn
+  sees this one — as in the paper.
+
+What each scan reports for them:
+
+| Scan | Result |
+|---|---|
+| Churn | +230 statements in each of the five libraries' main files; a new 545-statement file; +11 in `helpdesk/__init__.py` |
+| Agent Scan | all six library files **HIGH** — obfuscated code (230 / 545 machine-generated names) |
+| Threat index | **Attention** — "The same 5,870 characters of code were added to 5 files; the code is obfuscated (230
+machine-generated names); the Agent Scan rates it HIGH." and "Obfuscated code was added to
+web/third_party/date-lite/lib/sync.js (545 machine-generated names)." |
+
+The added code is inert: number assignments only — no network, no `eval`, nothing that runs.
 
 Every figure was produced by the tool on these folders.
