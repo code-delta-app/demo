@@ -29,7 +29,7 @@ def score_priority(subject: str, body: str, age_hours: float = 0.0) -> int:
     raw = max(hits) if hits else 0
 
     # Older unresolved tickets escalate.
-    if age_hours >= 72:
+    if age_hours >= 48:
         raw += 2
     elif age_hours >= 12:
         raw += 1
