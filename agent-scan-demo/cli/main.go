@@ -20,7 +20,7 @@ func main() {
 	switch os.Args[1] {
 	case "list":
 		for _, t := range ts.ListOpen() {
-			fmt.Printf("#%d [P%d] %s\n", t.ID, t.Priority, t.Subject)
+			fmt.Printf("#%04d  P%d  %s\n", t.ID, t.Priority, t.Subject)
 		}
 	case "show":
 		fs := flag.NewFlagSet("show", flag.ExitOnError)
@@ -29,7 +29,8 @@ func main() {
 		if t, ok := ts.Get(*id); ok {
 			fmt.Printf("#%d %s\nStatus: %s\n\n%s\n", t.ID, t.Subject, t.Status, t.Body)
 		} else {
-			fmt.Println("no such ticket")
+			fmt.Fprintln(os.Stderr, "no such ticket")
+			os.Exit(1)
 		}
 	case "close":
 		fs := flag.NewFlagSet("close", flag.ExitOnError)
