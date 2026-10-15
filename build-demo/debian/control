@@ -1,0 +1,11 @@
+Source: buildproj
+Section: utils
+Priority: optional
+Maintainer: Build Proj Developers <dev@example.com>
+Standards-Version: 4.6.2
+
+Package: buildproj
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Expression evaluator with a job control plane
+ Stress fixture for the CodeDelta build-file change alert.
