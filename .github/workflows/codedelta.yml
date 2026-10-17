@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - uses: code-delta-app/action@v1
+      - uses: code-delta-app/action@review-churn-test
         with:
           mode: churn_agent   # default mode: churn + Agent Scan (no ML audit)
