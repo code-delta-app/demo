@@ -12,6 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - uses: code-delta-app/action@v1
+      - uses: code-delta-app/action@review-churn-test
         with:
           mode: churn_agent   # default mode: churn + Agent Scan (no ML audit)
+
+  folder-only:             # TEMPORARY test (17 Oct 2026): the Action scanning one folder
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: code-delta-app/action@review-churn-test
+        with:
+          mode: churn
+          path: agent-scan-demo
