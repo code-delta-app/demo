@@ -19,3 +19,10 @@ def ask_claude(question: str) -> str:
         messages=[{"role": "user", "content": question}],
     )
     return msg.content[0].text
+
+def ask_with_fallback(question: str) -> str:
+    """Ask OpenAI first; fall back to Claude if the primary call fails."""
+    try:
+        return ask_openai(question)
+    except Exception:
+        return ask_claude(question)
