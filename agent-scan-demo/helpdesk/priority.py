@@ -81,3 +81,8 @@ def is_long_overdue(age_hours: float, limit_hours: float = 72.0) -> bool:
 def is_due_today(age_hours: float, limit_hours: float = 72.0) -> bool:
     """True when a ticket reaches its service limit within the next day."""
     return 0.0 <= limit_hours - age_hours < 24.0
+
+
+def is_breached(age_hours: float, limit_hours: float = 72.0) -> bool:
+    """True once a ticket is past its service limit."""
+    return age_hours > limit_hours
