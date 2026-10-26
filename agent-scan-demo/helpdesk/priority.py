@@ -10,6 +10,7 @@ KEYWORD_WEIGHTS = {
     "fails": 2,
     "error": 1,
     "slow": 1,
+    "timeout": 2,
     "broken": 2,
     "security": 3,
     "data loss": 3,
@@ -29,8 +30,64 @@ def score_priority(subject: str, body: str, age_hours: float = 0.0) -> int:
 
     # Older unresolved tickets escalate.
     if age_hours >= 48:
+        raw += 2
+    elif age_hours >= 12:
         raw += 1
-    elif age_hours >= 24:
-        raw += 0
 
     return max(0, min(MAX_SCORE, raw))
+
+
+def is_escalated(subject: str, body: str, age_hours: float = 0.0) -> bool:
+    """True when a ticket has reached the top band."""
+    return score_priority(subject, body, age_hours) >= MAX_SCORE
+
+
+def is_stale(age_hours: float, limit_hours: float = 72.0) -> bool:
+    """True when a ticket has waited longer than the service limit."""
+    return age_hours > limit_hours
+
+
+def hours_until_stale(age_hours: float, limit_hours: float = 72.0) -> float:
+    """Hours left before a ticket passes the service limit (0 once it has)."""
+    return max(0.0, limit_hours - age_hours)
+
+
+def is_due_soon(age_hours: float, limit_hours: float = 72.0, window_hours: float = 12.0) -> bool:
+    """True when a ticket will pass the service limit within the window."""
+    return 0.0 < hours_until_stale(age_hours, limit_hours) <= window_hours
+
+
+def is_overdue(age_hours: float, limit_hours: float = 72.0) -> bool:
+    """True once a ticket has passed the service limit by more than a day."""
+    return age_hours > limit_hours + 24.0
+
+
+def hours_overdue(age_hours: float, limit_hours: float = 72.0) -> float:
+    """Hours a ticket has spent past the service limit (0 until it passes)."""
+    return max(0.0, age_hours - limit_hours)
+
+
+def days_overdue(age_hours: float, limit_hours: float = 72.0) -> float:
+    """Whole days a ticket has spent past the service limit."""
+    return hours_overdue(age_hours, limit_hours) // 24.0
+
+
+def is_long_overdue(age_hours: float, limit_hours: float = 72.0) -> bool:
+    """True once a ticket is a full week past the service limit."""
+    return days_overdue(age_hours, limit_hours) >= 7.0
+
+
+
+def is_due_today(age_hours: float, limit_hours: float = 72.0) -> bool:
+    """True when a ticket reaches its service limit within the next day."""
+    return 0.0 <= limit_hours - age_hours < 24.0
+
+
+def is_breached(age_hours: float, limit_hours: float = 72.0) -> bool:
+    """True once a ticket is past its service limit."""
+    return age_hours > limit_hours
+
+
+def hours_remaining(age_hours: float, limit_hours: float = 72.0) -> float:
+    """Hours left before a ticket reaches its service limit (0 once breached)."""
+    return max(0.0, limit_hours - age_hours)
