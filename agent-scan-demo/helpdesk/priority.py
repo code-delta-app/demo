@@ -86,3 +86,8 @@ def is_due_today(age_hours: float, limit_hours: float = 72.0) -> bool:
 def is_breached(age_hours: float, limit_hours: float = 72.0) -> bool:
     """True once a ticket is past its service limit."""
     return age_hours > limit_hours
+
+
+def hours_remaining(age_hours: float, limit_hours: float = 72.0) -> float:
+    """Hours left before a ticket reaches its service limit (0 once breached)."""
+    return max(0.0, limit_hours - age_hours)
